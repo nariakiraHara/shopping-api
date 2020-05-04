@@ -40,11 +40,15 @@
           "dependencies": {
             "AngleSharp": {
               "target": "Package",
-              "version": "(, )"
+              "version": "[0.14.0, )"
             },
             "RestSharp": {
               "target": "Package",
               "version": "[106.6.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.4.1, )"
             }
           },
           "imports": [

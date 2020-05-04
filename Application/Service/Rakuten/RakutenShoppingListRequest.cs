@@ -4,12 +4,12 @@ namespace Application.Service.Rakuten
 {
     public class RakutenShoppingListRequest
     {
-        public RakutenShoppingListRequest(int id)
+        public RakutenShoppingListRequest(string searchParam)
         {
-            this.id = id;
+            this.searchParam = searchParam;
         }
 
-        private int id;
-        public int ID { get { return id; }}
+        private string searchParam;
+        public string SearchParam { get { return searchParam; }}
     }
 }

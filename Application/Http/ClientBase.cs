@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using Util;
 
 namespace Application.Http
 {
@@ -12,21 +13,20 @@ namespace Application.Http
         private static HttpClient client = new HttpClient();
         private ClientBase() {}
 
-        public static ClientBase Client { get; } = new ClientBase();
+        public static ClientBase GetInstance { get; } = new ClientBase();
 
-        public async Task<Stream> GetAsync(Uri uri, Dictionary<string, string> headers = null, Dictionary<string, string> auth = null)
+        public async Task<Stream> GetAsync(string uri, Dictionary<string, string> headers = null, Dictionary<string, string> auth = null)
         {
-            Stream stream;
+            Uri url = new Uri($"{Const.PROTCOL}{uri}");
+
             this.SetHeader(headers);
 
             var response = await client.GetAsync(uri);
 
             if (!response.IsSuccessStatusCode)
-                stream = null;
+                return null;
             
-            stream = await response.Content.ReadAsStreamAsync();
-
-            return stream;
+            return await response.Content.ReadAsStreamAsync();
         }
 
         private void SetAuth(Dictionary<string, string> auth)
