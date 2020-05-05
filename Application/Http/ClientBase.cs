@@ -21,7 +21,7 @@ namespace Application.Http
 
             this.SetHeader(headers);
 
-            var response = await client.GetAsync(uri);
+            var response = await client.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
                 return null;

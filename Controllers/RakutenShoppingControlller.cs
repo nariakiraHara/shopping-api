@@ -12,7 +12,7 @@ using Util;
 namespace shopping_api.Controllers
 {
     [ApiController]
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     public class RakutenShoppingController : ControllerBase
     {
         IService<RakutenShoppingListRequest, Task<RakutenShoppingList>> service 
