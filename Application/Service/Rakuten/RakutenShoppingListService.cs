@@ -20,14 +20,14 @@ namespace Application.Service.Rakuten
             var parser = new HtmlParser();
             var items = await parser.ParseDocumentAsync(client.GetItemList($"{RAKUTEN_SHOP_URL}{request.SearchParam}/").Result);
             model.Items = items.QuerySelector(".searchresultitems")
-                .GetElementsByClassName(".searchresultitem")
+                .QuerySelectorAll(".searchresultitem")
                 .Select(item =>
                 {
                     return new RakutenShopping()
                     {
                         ProductImageUrl = item.QuerySelector(".image > a").GetAttribute("href"),
                         ProductName = item.QuerySelector(".title > h2 > a").TextContent,
-                        ProductPrice = item.QuerySelector(".price:eq(0) > .important").TextContent.ToInt() ?? 0
+                        ProductPrice = item.QuerySelector(".price > .important").TextContent.Replace("円", "").ToInt() ?? 0
                     };
                 }).ToList();
             return model;

@@ -39,8 +39,12 @@ namespace shopping_api
             }
 
             app.UseOpenApi();
-
-            app.UseSwaggerUi3();
+            app.UseSwaggerUi3(config =>
+            {
+                config.DocumentTitle = "Shopping API";
+                //config.Path = "/shopping-api/v1/shoppingapi.json";
+                Console.WriteLine(config.Path);
+            });
             
             app.UseHttpsRedirection();
 
