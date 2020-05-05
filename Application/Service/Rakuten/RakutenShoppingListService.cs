@@ -5,19 +5,32 @@ using Application.Http.Rakuten;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AngleSharp.Html.Parser;
+using Util;
 
 namespace Application.Service.Rakuten
 {
-    public class RakutenShoppingListService : IService<RakutenShoppingListRequest, Task<List<RakutenShopping>>>
+    public class RakutenShoppingListService : IService<RakutenShoppingListRequest, Task<RakutenShoppingList>>
     {
         private const string RAKUTEN_SHOP_URL = "search.rakuten.co.jp/search/mall/";
 
         IRakutenClient client = new RakutenClient();
-        public async Task<List<RakutenShopping>> execute(RakutenShoppingListRequest request)
+        public async Task<RakutenShoppingList> execute(RakutenShoppingListRequest request)
         {
+            var model = new RakutenShoppingList();
             var parser = new HtmlParser();
-            var htmlDoc = await parser.ParseDocumentAsync(client.GetItemList($"{RAKUTEN_SHOP_URL}{request.SearchParam}/").Result);
-            return null;
+            var items = await parser.ParseDocumentAsync(client.GetItemList($"{RAKUTEN_SHOP_URL}{request.SearchParam}/").Result);
+            model.Items = items.QuerySelector(".searchresultitems")
+                .GetElementsByClassName(".searchresultitem")
+                .Select(item =>
+                {
+                    return new RakutenShopping()
+                    {
+                        ProductImageUrl = item.QuerySelector(".image > a").GetAttribute("href"),
+                        ProductName = item.QuerySelector(".title > h2 > a").TextContent,
+                        ProductPrice = item.QuerySelector(".price:eq(0) > .important").TextContent.ToInt() ?? 0
+                    };
+                }).ToList();
+            return model;
         }
     }
 }

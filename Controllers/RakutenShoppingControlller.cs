@@ -15,11 +15,11 @@ namespace shopping_api.Controllers
     [Route("api/{controller}")]
     public class RakutenShoppingController : ControllerBase
     {
-        IService<RakutenShoppingListRequest, Task<List<RakutenShopping>>> service 
+        IService<RakutenShoppingListRequest, Task<RakutenShoppingList>> service 
             = new RakutenShoppingListService();
         
         [HttpGet]
-        public List<RakutenShopping> GetItemList([FromQuery] string searchParam)
+        public RakutenShoppingList GetItemList([FromQuery] string searchParam)
         {
             return service.execute(new RakutenShoppingListRequest(searchParam)).Result;
         }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NSwag.AspNetCore;
 
 namespace shopping_api
 {
@@ -26,6 +27,7 @@ namespace shopping_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddOpenApiDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +38,10 @@ namespace shopping_api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseOpenApi();
+
+            app.UseSwaggerUi3();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
