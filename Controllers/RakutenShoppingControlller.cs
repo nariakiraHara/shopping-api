@@ -18,7 +18,7 @@ namespace shopping_api.Controllers
         IService<RakutenShoppingListRequest, Task<RakutenShoppingList>> service 
             = new RakutenShoppingListService();
         
-        [HttpGet]
+        [HttpGet("list")]
         public RakutenShoppingList GetItemList([FromQuery] string searchParam)
         {
             return service.execute(new RakutenShoppingListRequest(searchParam)).Result;
