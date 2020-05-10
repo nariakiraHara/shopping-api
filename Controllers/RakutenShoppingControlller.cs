@@ -21,7 +21,7 @@ namespace shopping_api.Controllers
         [HttpGet("list")]
         public RakutenShoppingList GetItemList([FromQuery] string searchParam)
         {
-            return service.execute(new RakutenShoppingListRequest(searchParam)).Result;
+            return service.execute(new RakutenShoppingListRequest(searchParam.Replace(",", "+"))).Result;
         }
     }
 }

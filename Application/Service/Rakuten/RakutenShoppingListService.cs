@@ -26,6 +26,7 @@ namespace Application.Service.Rakuten
                     return new RakutenShopping()
                     {
                         ProductImageUrl = item.QuerySelector(".image > a > img").GetAttribute("src"),
+                        ProductUrl = item.QuerySelector(".image > a").GetAttribute("href"),
                         ProductName = item.QuerySelector(".title > h2 > a").TextContent,
                         ProductPrice = item.QuerySelector(".price > .important").TextContent.Replace("円", "").ToInt() ?? 0
                     };

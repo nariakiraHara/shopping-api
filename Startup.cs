@@ -30,11 +30,20 @@ namespace shopping_api
         {
             services.AddCors(options =>
             {
+                options.AddDefaultPolicy(
+                    builder => builder
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowAnyOrigin()
+                );
+
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:8080",
-                                            "http://www.contoso.com");
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
                     });
             });
             services.AddControllers();
@@ -62,7 +71,7 @@ namespace shopping_api
             app.UseRouting();
 
             app.UseCors();
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
