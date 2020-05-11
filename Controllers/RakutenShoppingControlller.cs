@@ -9,7 +9,7 @@ using Application.Service;
 using Application.Service.Rakuten;
 using Util;
 
-namespace shopping_api.Controllers
+namespace Application.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

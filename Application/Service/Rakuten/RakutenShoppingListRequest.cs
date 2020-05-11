@@ -10,6 +10,6 @@ namespace Application.Service.Rakuten
         }
 
         private string searchParam;
-        public string SearchParam { get { return searchParam; }}
+        public string SearchParam { get => searchParam; }
     }
 }
