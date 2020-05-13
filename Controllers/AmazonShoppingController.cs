@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-    public class AmazonShoppingController
+    [ApiController]
+    [Route("api/[Controller]")]
+    public class AmazonShoppingController : ControllerBase
     {
-
+        [HttpGet("list")]
+        public 
     }
 }
