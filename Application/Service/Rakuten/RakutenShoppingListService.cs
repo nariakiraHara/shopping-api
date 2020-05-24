@@ -23,12 +23,13 @@ namespace Application.Service.Rakuten
                 .QuerySelectorAll(".searchresultitem")
                 .Select(item =>
                 {
+                    Console.WriteLine(item.QuerySelector(".price > .important").TextContent);
                     return new RakutenShopping()
                     {
                         ProductImageUrl = item.QuerySelector(".image > a > img").GetAttribute("src"),
                         ProductUrl = item.QuerySelector(".image > a").GetAttribute("href"),
                         ProductName = item.QuerySelector(".title > h2 > a").TextContent,
-                        ProductPrice = item.QuerySelector(".price > .important").TextContent.Replace("円", "").ToInt() ?? 0
+                        ProductPrice = Utility.ReplaceMoneyFomat(item.QuerySelector(".price > .important").TextContent).ToInt() ?? 0
                     };
                 }).ToList();
             return model;

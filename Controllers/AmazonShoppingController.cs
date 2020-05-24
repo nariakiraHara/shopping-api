@@ -1,4 +1,9 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
+using Application.Service;
+using Application.Service.Amazon;
+using Application.Model.Amazon;
 
 namespace Application.Controllers
 {
@@ -6,7 +11,13 @@ namespace Application.Controllers
     [Route("api/[Controller]")]
     public class AmazonShoppingController : ControllerBase
     {
+        IService<AmazonShoppingListRequest, Task<AmazonShoppingList>> service
+            = new AmazonShoppingListService();
+
         [HttpGet("list")]
-        public 
+        public AmazonShoppingList GetList([FromQuery] string searchParam)
+        {
+            return this.service.execute(new AmazonShoppingListRequest(searchParam)).Result;
+        }
     }
 }
