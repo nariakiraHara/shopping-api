@@ -9,6 +9,7 @@ namespace Application.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    // コントローラークラス
     public class AmazonShoppingController : ControllerBase
     {
         IService<AmazonShoppingListRequest, Task<AmazonShoppingList>> service
