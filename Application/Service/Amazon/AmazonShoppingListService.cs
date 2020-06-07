@@ -21,19 +21,20 @@ namespace Application.Service.Amazon
             var model = new AmazonShoppingList();
             var parser = new HtmlParser();
             var items = await parser.ParseDocumentAsync(amazonClient.GetItemList(AMAZON_DOMAIN + queryParam).Result);
-            model.Items = items.QuerySelector(".s-main-slot.s-result-list.s-search-results.sg-row > div > div > span > div > div > div")
-                .QuerySelectorAll(".a-section.a-spacing-medium")
-                .Select( x =>
-                {
+            model.Items = items.QuerySelectorAll(".s-main-slot.s-result-list.s-search-results.sg-row > div")
+                .Select( x => {
+                    var selectItem = x.QuerySelector("div > span > div > div > div");
                     return new AmazonShopping()
                     {
-                        ProductName = x.QuerySelector(".rush-component > a > div > img").GetAttribute("alt"),
-                        ProductImageUrl = x.QuerySelector(".rush-component > a > div > img").GetAttribute("src"),
-                        ProductUrl = x.QuerySelector(".rush-component > a > div > img").GetAttribute("href"),
-                        ProductPrice = Utility.ReplaceMoneyFomat(x.QuerySelector("div > .a-row.a-size-base.a-color-base > div > a > span > span > span.a-price-whole")
+                        ProductName = selectItem?.QuerySelector(".rush-component > a > div > img").GetAttribute("alt"),
+                        ProductImageUrl = selectItem?.QuerySelector(".rush-component > a > div > img").GetAttribute("src"),
+                        ProductUrl = selectItem?.QuerySelector(".rush-component > a > div > img").GetAttribute("href"),
+                        ProductPrice = Utility.ReplaceMoneyFomat(selectItem?.QuerySelector("div > .a-row.a-size-base.a-color-base > div > a > span > span > span.a-price-whole")
                                         .TextContent).ToInt() ?? 0
                     };
                 }).ToList();
+            
+            var hoge = items.QuerySelectorAll(".s-main-slot.s-result-list.s-search-results.sg-row > div");
             
             return model;
         }

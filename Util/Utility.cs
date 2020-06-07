@@ -4,7 +4,7 @@ namespace Util
     {
         public static string ReplaceMoneyFomat(string money)
         {
-            return money.Replace("\\", "").Replace(",", "").Replace("円", "");
+            return money.Replace("￥", "").Replace("\\", "").Replace(",", "").Replace("円", "");
         }
     }
 }
